@@ -20,7 +20,7 @@ var IndecisionApp = function (_React$Component) {
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.state = {
-            options: ['First option', 'Second option', 'Third option']
+            options: props.options
         };
         return _this;
     }
@@ -29,9 +29,7 @@ var IndecisionApp = function (_React$Component) {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
             this.setState(function () {
-                return {
-                    options: []
-                };
+                return { options: [] };
             });
         }
     }, {
@@ -50,21 +48,18 @@ var IndecisionApp = function (_React$Component) {
                 return 'This option already exists.';
             }
             this.setState(function (prevState) {
-                return {
-                    options: prevState.options.concat(option)
-                };
+                return { options: prevState.options.concat(option) };
             });
         }
     }, {
         key: 'render',
         value: function render() {
-            var title = 'Indecision App';
             var subtitle = 'Put your life in the hand of a computer.';
 
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, { title: title, subtitle: subtitle }),
+                React.createElement(Header, { subtitle: subtitle }),
                 React.createElement(Action, {
                     hasOptions: this.state.options.length > 0,
                     handlePick: this.handlePick
@@ -82,6 +77,10 @@ var IndecisionApp = function (_React$Component) {
 
     return IndecisionApp;
 }(React.Component);
+
+IndecisionApp.defaultProps = {
+    options: []
+};
 
 var Header = function (_React$Component2) {
     _inherits(Header, _React$Component2);
@@ -103,7 +102,7 @@ var Header = function (_React$Component2) {
                     null,
                     this.props.title
                 ),
-                React.createElement(
+                this.props && React.createElement(
                     'h3',
                     null,
                     this.props.subtitle
@@ -114,6 +113,10 @@ var Header = function (_React$Component2) {
 
     return Header;
 }(React.Component);
+
+Header.defaultProps = {
+    title: 'Indecision App'
+};
 
 var Action = function (_React$Component3) {
     _inherits(Action, _React$Component3);
@@ -229,6 +232,7 @@ var AddOption = function (_React$Component6) {
             this.setState(function () {
                 return { error: error };
             });
+            e.target.elements.option.value = '';
         }
     }, {
         key: 'render',

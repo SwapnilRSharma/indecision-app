@@ -5,16 +5,12 @@ class IndecisionApp extends React.Component{
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
         this.state = {
-            options: ['First option', 'Second option', 'Third option']
+            options: props.options
         }
     }
 
     handleDeleteOptions(){
-        this.setState(() => {
-            return {
-                options: []
-            };
-        });
+        this.setState(() => ({ options: [] }));
     }
 
     handlePick(){
@@ -29,20 +25,15 @@ class IndecisionApp extends React.Component{
         } else if (this.state.options.indexOf(option) > -1){
             return 'This option already exists.'
         }
-        this.setState((prevState) => {
-            return {
-                options: prevState.options.concat(option)
-            };
-        })
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
     }
 
     render(){
-        const title = 'Indecision App';
         const subtitle = 'Put your life in the hand of a computer.'
 
         return (
             <div>
-                <Header title={title} subtitle={subtitle}/>
+                <Header subtitle={subtitle}/>
                 <Action 
                     hasOptions={this.state.options.length > 0}
                     handlePick={this.handlePick}
@@ -59,15 +50,23 @@ class IndecisionApp extends React.Component{
     }
 }
 
+IndecisionApp.defaultProps = {
+    options : []
+}
+
 class Header extends React.Component{
     render(){
         return (
             <div>
                 <h1>{this.props.title}</h1>
-                <h3>{this.props.subtitle}</h3>
+                {this.props && <h3>{this.props.subtitle}</h3>}
             </div>
         );
     }
+}
+
+Header.defaultProps = {
+    title: 'Indecision App'
 }
 
 class Action extends React.Component{
@@ -125,9 +124,8 @@ class AddOption extends React.Component{
         const option = e.target.elements.option.value.trim();
         const error = this.props.handleAddOption(option);
 
-        this.setState(() => {
-            return {error};
-        });
+        this.setState(() => ({ error: error }));
+        e.target.elements.option.value = '';
     }
 
     render(){
