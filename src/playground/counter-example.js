@@ -24,7 +24,6 @@ class Counter extends React.Component{
     if(prevState.count != this.state.count){
       const count = JSON.stringify(this.state.count)
       localStorage.setItem('count', count)
-      console.log('Data updated.')
     }
   }
 
