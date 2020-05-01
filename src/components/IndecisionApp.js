@@ -3,10 +3,13 @@ import Header from './Header';
 import Action from './Action';
 import Options from './Options';
 import AddOption from './AddOption';
+import OptionModal from './OptionModal';
+import Modal from 'react-modal';
 
 export default class IndecisionApp extends React.Component {
     state = {
-        options: []
+        options: [],
+        selectedOption: undefined
     };
 
     handleDeleteOptions = () => {
@@ -26,8 +29,12 @@ export default class IndecisionApp extends React.Component {
     handlePick = () => {
         const random = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[random];
-        alert(option);
+        this.setState(() => ({ selectedOption: option }))
     };
+
+    handleCloseModal = () => {
+        this.setState(() => ({ selectedOption: undefined }));
+    }
 
     handleAddOption = (option) => {
         if (!option) {
@@ -42,8 +49,12 @@ export default class IndecisionApp extends React.Component {
 
     componentDidMount() {
         try {
+            Modal.setAppElement('body')
+
             const json = localStorage.getItem("options");
             const options = JSON.parse(json);
+
+
 
             if (options) {
                 this.setState(() => ({ options }));
@@ -62,6 +73,7 @@ export default class IndecisionApp extends React.Component {
         console.log("componentDidUnmout");
     };
 
+
     render() {
         const subtitle = "Put your life in the hand of a computer.";
 
@@ -78,6 +90,10 @@ export default class IndecisionApp extends React.Component {
                     handleDeleteOption={this.handleDeleteOption}
                 />
                 <AddOption handleAddOption={this.handleAddOption} />
+                <OptionModal
+                    selectedOption={this.state.selectedOption}
+                    handleCloseModal={this.handleCloseModal}
+                />
             </div>
         );
     }
