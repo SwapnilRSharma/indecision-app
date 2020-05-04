@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "12.14.x"
+  },
   "dependencies": {
     "babel-core": "6.25.0",
     "babel-loader": "7.1.1",
