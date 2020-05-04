@@ -10,6 +10,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^3.5.3",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "live-server": "^1.2.1",
     "node-sass": "^4.14.0",
     "normalize.css": "^8.0.1",
@@ -25,7 +26,9 @@
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "build": "webpack",
+    "serve": "live-server public/",
+    "build:dev": "webpack",
+    "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server"
   },
   "author": "Swapnil Sharma",
